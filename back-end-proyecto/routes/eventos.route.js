@@ -1,0 +1,156 @@
+const express = require('express');
+const router = express.Router();
+const Evento = require('../models/eventos.model');
+
+// Listado general de eventos
+router.get('/', async (req, res) => {
+    try {
+        const eventos = await Evento.find().populate('categoria');
+
+        res.json({
+            message: 'Eventos listados correctamente',
+            estado: 'ok',
+            eventos: eventos
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al listar los eventos',
+            estado: 'error',
+            error: error.message
+        });
+    }
+});
+
+// Detalle de evento por id
+router.get('/:id', async (req, res) => {
+    try {
+        const evento = await Evento.findById(req.params.id).populate('categoria');
+
+        if (!evento) {
+            return res.status(404).json({
+                message: 'Evento no encontrado',
+                estado: 'error'
+            });
+        }
+
+        res.json({
+            message: 'Detalle del evento obtenido correctamente',
+            estado: 'ok',
+            evento: evento
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al obtener el detalle del evento',
+            estado: 'error',
+            error: error.message
+        });
+    }
+});
+
+// Registro de evento
+router.post('/', async (req, res) => {
+    try {
+        const { nombre, descripcion, fecha, hora, lugar, categoria, estado } = req.body;
+
+        if (!nombre || !descripcion || !fecha || !hora || !lugar || !categoria || !estado) {
+            return res.status(400).json({
+                message: 'Faltan datos requeridos. Todos los campos son obligatorios.',
+                estado: 'error'
+            });
+        }
+
+        const eventoNuevo = new Evento({
+            nombre,
+            descripcion,
+            fecha,
+            hora,
+            lugar,
+            categoria,
+            estado
+        });
+
+        await eventoNuevo.save();
+
+        res.status(201).json({
+            message: 'Evento registrado correctamente',
+            estado: 'ok',
+            evento: eventoNuevo
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al registrar el evento',
+            estado: 'error',
+            error: error.message
+        });
+    }
+});
+
+// Actualizar evento por id
+router.put('/:id', async (req, res) => {
+    try {
+        const { nombre, descripcion, fecha, hora, lugar, categoria, estado } = req.body;
+
+        if (!nombre || !descripcion || !fecha || !hora || !lugar || !categoria || !estado) {
+            return res.status(400).json({
+                message: 'Faltan datos requeridos para actualizar el evento',
+                estado: 'error'
+            });
+        }
+
+        const eventoActualizado = await Evento.findByIdAndUpdate(
+            req.params.id,
+            { nombre, descripcion, fecha, hora, lugar, categoria, estado },
+            { new: true }
+        );
+
+        if (!eventoActualizado) {
+            return res.status(404).json({
+                message: 'Evento no encontrado',
+                estado: 'error'
+            });
+        }
+
+        res.json({
+            message: 'Evento actualizado correctamente',
+            estado: 'ok',
+            evento: eventoActualizado
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al actualizar el evento',
+            estado: 'error',
+            error: error.message
+        });
+    }
+});
+
+// Eliminar evento por id
+router.delete('/:id', async (req, res) => {
+    try {
+        const eventoEliminado = await Evento.findByIdAndDelete(req.params.id);
+
+        if (!eventoEliminado) {
+            return res.status(404).json({
+                message: 'Evento no encontrado',
+                estado: 'error'
+            });
+        }
+
+        res.json({
+            message: 'Evento eliminado correctamente',
+            estado: 'ok',
+            evento: eventoEliminado
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al eliminar el evento',
+            estado: 'error',
+            error: error.message
+        });
+    }
+});
+
+module.exports = router;
