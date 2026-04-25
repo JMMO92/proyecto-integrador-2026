@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle del Evento</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+
+  <header class="bg-primary text-white py-3 shadow-sm mb-4">
+    <div class="container d-flex align-items-center">
+      <h1 class="h4 mb-0">Detalle del Evento</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        
+        <div class="card shadow border-0">
+          <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+            <h2 class="h5 mb-0 text-primary" id="detNombre">Cargando evento...</h2>
+            <span id="detEstado" class="badge rounded-pill">Estado</span>
+          </div>
+          
+          <div class="card-body p-4">
+            <div class="mb-4">
+              <label class="text-muted small fw-bold text-uppercase">Descripción</label>
+              <p id="detDescripcion" class="lead fs-6 mt-1 text-secondary">---</p>
+            </div>
+
+            <hr class="text-muted opacity-25">
+
+            <div class="row g-4">
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center">
+                  <div class="icon-square bg-primary-subtle text-primary p-2 rounded me-3">
+                    <i class="bi bi-calendar-event"></i>
+                  </div>
+                  <div>
+                    <label class="text-muted small d-block">Fecha</label>
+                    <span id="detFecha" class="fw-medium">--/--/----</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center">
+                  <div class="icon-square bg-primary-subtle text-primary p-2 rounded me-3">
+                    <i class="bi bi-clock"></i>
+                  </div>
+                  <div>
+                    <label class="text-muted small d-block">Hora</label>
+                    <span id="detHora" class="fw-medium">--:--</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center">
+                  <div class="icon-square bg-primary-subtle text-primary p-2 rounded me-3">
+                    <i class="bi bi-geo-alt"></i>
+                  </div>
+                  <div>
+                    <label class="text-muted small d-block">Lugar</label>
+                    <span id="detLugar" class="fw-medium">---</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="d-flex align-items-center">
+                  <div class="icon-square bg-primary-subtle text-primary p-2 rounded me-3">
+                    <i class="bi bi-tag"></i>
+                  </div>
+                  <div>
+                    <label class="text-muted small d-block">Categoría</label>
+                    <span id="detCategoria" class="fw-medium">---</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer bg-white py-3 d-flex gap-2">
+            <button class="btn btn-warning w-100" onclick="RegresarAEventos()">
+              <i class="bi bi-arrow-left"></i> Volver
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="detalle-evento.js"></script>
+</body>
+</html>

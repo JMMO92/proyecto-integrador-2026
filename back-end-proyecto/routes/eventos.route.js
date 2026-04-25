@@ -108,6 +108,7 @@ router.get('/filtro/estado', async (req, res) => {
 // Detalle de evento por id
 router.get('/:id', async (req, res) => {
     try {
+        console.log("ID recibido para detalle de evento:", req.params.id);
         const evento = await Evento.findById(req.params.id).populate('categoria');
 
         if (!evento) {
@@ -134,9 +135,10 @@ router.get('/:id', async (req, res) => {
 // Registro de evento
 router.post('/', async (req, res) => {
     try {
+        console.log("Datos recibidos para registrar evento:", req.body);
         const { nombre, descripcion, fecha, hora, lugar, categoria, estado } = req.body;
 
-        if (!nombre || !descripcion || !fecha || !hora || !lugar || !categoria || !estado) {
+        if (!nombre || !descripcion || !fecha || !hora || !lugar  || !categoria || !estado) {
             return res.status(400).json({
                 message: 'Faltan datos requeridos. Todos los campos son obligatorios.',
                 estado: 'error'
@@ -153,7 +155,18 @@ router.post('/', async (req, res) => {
             estado
         });
 
-        await eventoNuevo.save();
+        try{
+            await eventoNuevo.save();
+        }catch(saveError) {
+            console.error("Error al guardar el evento:", saveError);
+            return res.status(500).json({
+                message: 'Error al guardar el evento en la base de datos',
+                estado: 'error',
+                error: saveError.message
+            });
+        }
+
+        
 
         res.status(201).json({
             message: 'Evento registrado correctamente',
