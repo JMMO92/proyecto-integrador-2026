@@ -108,6 +108,7 @@ router.get('/filtro/estado', async (req, res) => {
 // Detalle de evento por id
 router.get('/:id', async (req, res) => {
     try {
+        console.log("ID recibido para detalle de evento:", req.params.id);
         const evento = await Evento.findById(req.params.id).populate('categoria');
 
         if (!evento) {
