@@ -32,6 +32,7 @@ localevents/
 │   └── server.js        # Punto de entrada del servidor
 └── front-end-proyecto/
     ├── js/              # Scripts de cada página
+    ├── eventos/         # Páginas de gestión de eventos
     └── *.html           # Páginas de la aplicación
 ```
 
