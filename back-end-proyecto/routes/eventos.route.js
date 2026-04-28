@@ -30,7 +30,6 @@ router.get('/activos/imagenes', async (req, res) => {
         })
         .populate('categoria')
         .sort({ _id: -1 })
-        .limit(3);
 
         res.json({
             message: 'Eventos activos con imagen listados correctamente',
