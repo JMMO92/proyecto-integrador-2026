@@ -26,7 +26,7 @@
 
 ### 1. Presentación del problema y propuesta de solución
 
-El equipo de desarrollo presentó a la cliente la problemática identificada: la falta de una plataforma centralizada para el descubrimiento de eventos locales (culturales, recreativos y sociales) en el Municipio de Heredia, donde la difusión actualmente depende de medios informales y comunicación de boca a boca.
+El equipo de desarrollo presentó a la cliente la problemática identificada: la falta de una plataforma centralizada para el descubrimiento de eventos locales (culturales, recreativos y sociales) a nivel nacional, donde la difusión actualmente depende de medios informales y comunicación de boca a boca.
 
 Se propuso **LocalEvents**, una plataforma web fullstack que permite registrar, gestionar y descubrir eventos locales a través de una interfaz intuitiva, sin requerir conocimientos técnicos por parte de los usuarios finales.
 
@@ -34,9 +34,9 @@ Se propuso **LocalEvents**, una plataforma web fullstack que permite registrar, 
 
 Se presentaron y validaron con la cliente los tres tipos de usuario del sistema:
 
-- **Explorador:** usuario que descubre y consulta eventos.
-- **Promotor:** usuario que publica y gestiona eventos.
-- **Moderador:** usuario que administra categorías y supervisa el contenido.
+- **Cliente:** usuario que descubre y consulta eventos.
+- **Vendedor:** usuario que publica y gestiona eventos.
+- **Administrador:** usuario que administra categorías y supervisa el contenido.
 
 La cliente confirmó que estos roles son suficientes para cubrir las necesidades del sistema.
 
@@ -94,7 +94,7 @@ Se informó a la cliente sobre las tecnologías a utilizar:
 ## Acuerdos
 
 1. La cliente aprueba el alcance del sistema LocalEvents tal como fue presentado, confirmando que resuelve la necesidad de centralizar la información de eventos locales del municipio.
-2. Se aprueba la estructura de tres roles de usuario: Explorador, Promotor y Moderador.
+2. Se aprueba la estructura de tres roles de usuario: Cliente, Vendedor y Administrador.
 3. Se aprueba que los eventos tengan tres estados posibles: Activo, Cancelado y Finalizado.
 4. Se aprueba que las categorías tengan estado Activa o Inactiva, con valor por defecto Activa.
 5. Se acuerda que los filtros de búsqueda estarán disponibles como páginas independientes accesibles desde la interfaz.
