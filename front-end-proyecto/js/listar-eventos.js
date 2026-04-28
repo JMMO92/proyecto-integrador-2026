@@ -40,7 +40,7 @@ async function cargarEventos() {
         if (!response.ok) {
             tbodyEventos.innerHTML = `
                 <tr>
-                    <td colspan="8" class="text-center text-danger">
+                    <td colspan="9" class="text-center text-danger">
                         Error al cargar los eventos
                     </td>
                 </tr>
@@ -54,7 +54,7 @@ async function cargarEventos() {
     } catch (error) {
         tbodyEventos.innerHTML = `
             <tr>
-                <td colspan="8" class="text-center text-danger">
+                <td colspan="9" class="text-center text-danger">
                     No se pudo conectar con el servidor
                 </td>
             </tr>
@@ -69,7 +69,7 @@ function renderizarEventos(eventos) {
     if (!eventos || eventos.length === 0) {
         tbodyEventos.innerHTML = `
             <tr>
-                <td colspan="8" class="text-center">
+                <td colspan="9" class="text-center">
                     No hay eventos registrados
                 </td>
             </tr>
@@ -92,6 +92,14 @@ function renderizarEventos(eventos) {
                 <a href="detalle-evento.html?id=${evento._id}" class="btn btn-sm btn-outline-primary">
                     Ver detalle
                 </a>
+            </td>
+            <td>
+                <a href="editar-evento.html?id=${evento._id}" class="btn btn-sm btn-warning me-2">
+                    ✏️ Editar
+                </a>
+                <button class="btn btn-sm btn-danger" onclick="eliminarEvento('${evento._id}')">
+                    🗑️ Eliminar
+                </button>
             </td>
         `;
 
@@ -136,6 +144,33 @@ function limpiarFiltros() {
 
 btnFiltrar.addEventListener('click', aplicarFiltros);
 btnLimpiarFiltros.addEventListener('click', limpiarFiltros);
+
+async function eliminarEvento(id) {
+    const confirmar = confirm('¿Desea eliminar este evento?');
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/eventos/${id}`, {
+            method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || 'No se pudo eliminar el evento.');
+            return;
+        }
+
+        cargarEventos();
+
+    } catch (error) {
+        alert('No se pudo conectar con el servidor.');
+        console.error(error);
+    }
+}
 
 cargarCategoriasFiltro();
 cargarEventos();
