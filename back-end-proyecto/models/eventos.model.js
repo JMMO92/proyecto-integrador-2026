@@ -31,6 +31,11 @@ const eventoSchema = new mongoose.Schema({
         required: true,
         enum: ['Activo', 'Cancelado', 'Finalizado'],
         default: 'Activo'
+    },
+    imagen: {
+        type: String,
+        required: false,
+        default: ''
     }
 });
 
