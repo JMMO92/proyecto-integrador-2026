@@ -2,6 +2,8 @@ const formRegistrarEvento = document.getElementById('formRegistrarEvento');
 const mensajeEvento = document.getElementById('mensajeEvento');
 const sltCategoriaEvento = document.getElementById('sltCategoriaEvento');
 
+const imagen = document.getElementById('txtImagenEvento').value.trim();
+
 async function cargarCategoriasEnSelect() {
     try {
         const response = await fetch('http://localhost:3000/api/categorias');
@@ -57,7 +59,8 @@ formRegistrarEvento.addEventListener('submit', async function (event) {
         hora,
         lugar,
         categoria,
-        estado
+        estado,
+        imagen
     };
 
     try {
