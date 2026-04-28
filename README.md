@@ -33,7 +33,10 @@ localevents/
 └── front-end-proyecto/
     ├── js/              # Scripts de cada página
     ├── eventos/         # Páginas de gestión de eventos
-    └── *.html           # Páginas de la aplicación
+    ├── editar-usuario.html
+    ├── editar-categoria.html
+    ├── editar-evento.html
+    └── *.html           # Páginas principales
 ```
 
 ---
@@ -107,7 +110,7 @@ node server.js
 feature/mi-funcionalidad → dev → main
 ```
 
-Nunca se hace commit directo a `main`.
+Se recomienda trabajar en branches feature/ y fusionar a main mediante Pull Request.
 
 ---
 
