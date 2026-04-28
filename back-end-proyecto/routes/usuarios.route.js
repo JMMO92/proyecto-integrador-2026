@@ -33,6 +33,33 @@ router.post('/', async (req, res) => {
             });
         }
 
+        const regexCedula = /^[0-9]+$/;
+
+        if (!regexCedula.test(cedula)) {
+            return res.status(400).json({
+                message: 'La cédula debe contener solo números.',
+                estado: 'error'
+            });
+        }
+
+        const usuarioPorCedula = await Usuario.findOne({ cedula: cedula });
+
+        if (usuarioPorCedula) {
+            return res.status(409).json({
+                message: 'Ya existe un usuario registrado con esa cédula.',
+                estado: 'error'
+            });
+        }
+
+        const usuarioPorCorreo = await Usuario.findOne({ correo: correo });
+
+        if (usuarioPorCorreo) {
+            return res.status(409).json({
+                message: 'Ya existe un usuario registrado con ese correo electrónico.',
+                estado: 'error'
+            });
+        }
+
         const usuarioNuevo = new Usuario({
             nombre,
             cedula,
@@ -121,6 +148,33 @@ router.put('/cedula/:cedula', async (req, res) => {
     } catch (error) {
         res.status(500).json({
             message: 'Error al actualizar el usuario',
+            estado: 'error',
+            error: error.message
+        });
+    }
+});
+
+// Buscar usuario por cédula
+router.get('/cedula/:cedula', async (req, res) => {
+    try {
+        const usuario = await Usuario.findOne({ cedula: req.params.cedula });
+
+        if (!usuario) {
+            return res.status(404).json({
+                message: 'Usuario no encontrado',
+                estado: 'error'
+            });
+        }
+
+        res.json({
+            message: 'Usuario encontrado correctamente',
+            estado: 'ok',
+            usuario
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error al buscar el usuario',
             estado: 'error',
             error: error.message
         });

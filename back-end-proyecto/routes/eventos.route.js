@@ -21,84 +21,26 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Filtro de eventos por categoría
-router.get('/filtro/categoria', async (req, res) => {
+// Eventos activos con imagen para carrusel
+router.get('/activos/imagenes', async (req, res) => {
     try {
-        const { categoria } = req.query;
-
-        if (!categoria) {
-            return res.status(400).json({
-                message: 'Debe indicar una categoría para filtrar',
-                estado: 'error'
-            });
-        }
-
-        const eventos = await Evento.find({ categoria: categoria }).populate('categoria');
+        const eventos = await Evento.find({
+            estado: 'Activo',
+            imagen: { $ne: '' }
+        })
+        .populate('categoria')
+        .sort({ _id: -1 })
+        .limit(3);
 
         res.json({
-            message: 'Eventos filtrados por categoría correctamente',
+            message: 'Eventos activos con imagen listados correctamente',
             estado: 'ok',
             eventos: eventos
         });
+
     } catch (error) {
         res.status(500).json({
-            message: 'Error al filtrar eventos por categoría',
-            estado: 'error',
-            error: error.message
-        });
-    }
-});
-
-// Filtro de eventos por fecha
-router.get('/filtro/fecha', async (req, res) => {
-    try {
-        const { fecha } = req.query;
-
-        if (!fecha) {
-            return res.status(400).json({
-                message: 'Debe indicar una fecha para filtrar',
-                estado: 'error'
-            });
-        }
-
-        const eventos = await Evento.find({ fecha: fecha }).populate('categoria');
-
-        res.json({
-            message: 'Eventos filtrados por fecha correctamente',
-            estado: 'ok',
-            eventos: eventos
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: 'Error al filtrar eventos por fecha',
-            estado: 'error',
-            error: error.message
-        });
-    }
-});
-
-// Consulta de eventos por estado
-router.get('/filtro/estado', async (req, res) => {
-    try {
-        const { estado } = req.query;
-
-        if (!estado) {
-            return res.status(400).json({
-                message: 'Debe indicar un estado para filtrar',
-                estado: 'error'
-            });
-        }
-
-        const eventos = await Evento.find({ estado: estado }).populate('categoria');
-
-        res.json({
-            message: 'Eventos filtrados por estado correctamente',
-            estado: 'ok',
-            eventos: eventos
-        });
-    } catch (error) {
-        res.status(500).json({
-            message: 'Error al filtrar eventos por estado',
+            message: 'Error al listar eventos activos con imagen',
             estado: 'error',
             error: error.message
         });
@@ -108,7 +50,6 @@ router.get('/filtro/estado', async (req, res) => {
 // Detalle de evento por id
 router.get('/:id', async (req, res) => {
     try {
-        console.log("ID recibido para detalle de evento:", req.params.id);
         const evento = await Evento.findById(req.params.id).populate('categoria');
 
         if (!evento) {
@@ -135,10 +76,9 @@ router.get('/:id', async (req, res) => {
 // Registro de evento
 router.post('/', async (req, res) => {
     try {
-        console.log("Datos recibidos para registrar evento:", req.body);
-        const { nombre, descripcion, fecha, hora, lugar, categoria, estado } = req.body;
+        const { nombre, descripcion, fecha, hora, lugar, categoria, estado, imagen } = req.body;
 
-        if (!nombre || !descripcion || !fecha || !hora || !lugar  || !categoria || !estado) {
+        if (!nombre || !descripcion || !fecha || !hora || !lugar || !categoria || !estado) {
             return res.status(400).json({
                 message: 'Faltan datos requeridos. Todos los campos son obligatorios.',
                 estado: 'error'
@@ -152,21 +92,11 @@ router.post('/', async (req, res) => {
             hora,
             lugar,
             categoria,
-            estado
+            estado,
+            imagen: imagen || ''
         });
 
-        try{
-            await eventoNuevo.save();
-        }catch(saveError) {
-            console.error("Error al guardar el evento:", saveError);
-            return res.status(500).json({
-                message: 'Error al guardar el evento en la base de datos',
-                estado: 'error',
-                error: saveError.message
-            });
-        }
-
-        
+        await eventoNuevo.save();
 
         res.status(201).json({
             message: 'Evento registrado correctamente',
@@ -186,7 +116,7 @@ router.post('/', async (req, res) => {
 // Actualizar evento por id
 router.put('/:id', async (req, res) => {
     try {
-        const { nombre, descripcion, fecha, hora, lugar, categoria, estado } = req.body;
+        const { nombre, descripcion, fecha, hora, lugar, categoria, estado, imagen } = req.body;
 
         if (!nombre || !descripcion || !fecha || !hora || !lugar || !categoria || !estado) {
             return res.status(400).json({
@@ -197,7 +127,7 @@ router.put('/:id', async (req, res) => {
 
         const eventoActualizado = await Evento.findByIdAndUpdate(
             req.params.id,
-            { nombre, descripcion, fecha, hora, lugar, categoria, estado },
+            { nombre, descripcion, fecha, hora, lugar, categoria, estado, imagen: imagen || '' },
             { new: true }
         );
 
