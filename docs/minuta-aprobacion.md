@@ -15,7 +15,7 @@
 
 | Nombre | Rol |
 |--------|-----|
-| María González | Cliente — Coordinadora de Eventos Culturales, Municipio de Heredia |
+| María González | Cliente — Coordinadora de Eventos Culturales a Nivel Nacional, Costa Rica |
 | Rubén Cruz Gutiérrez | Desarrollador — Equipo LocalEvents |
 | Yariel Matarrita Rosales | Desarrollador — Equipo LocalEvents |
 | Jose Mondragón On | Desarrollador — Equipo LocalEvents |
