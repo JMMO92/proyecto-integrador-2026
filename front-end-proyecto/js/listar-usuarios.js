@@ -36,6 +36,14 @@ async function cargarUsuarios() {
                 <td>${usuario.cedula}</td>
                 <td>${usuario.correo}</td>
                 <td>${usuario.tipoUsuario}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning me-2" onclick="editarUsuario('${usuario.cedula}')">
+                        ✏️ Editar
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="eliminarUsuario('${usuario.cedula}')">
+                        🗑️ Eliminar
+                    </button>
+                </td>
             `;
             tbody.appendChild(fila);
         });
@@ -50,6 +58,37 @@ async function cargarUsuarios() {
         `;
         console.error(error);
     }
+}
+
+async function eliminarUsuario(cedula) {
+    const confirmar = confirm('¿Desea eliminar este usuario?');
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/usuarios/cedula/${cedula}`, {
+            method: 'DELETE'
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.message || 'No se pudo eliminar el usuario.');
+            return;
+        }
+
+        cargarUsuarios();
+
+    } catch (error) {
+        alert('No se pudo conectar con el servidor.');
+        console.error(error);
+    }
+}
+
+function editarUsuario(cedula) {
+    window.location.href = `editar-usuario.html?cedula=${cedula}`;
 }
 
 cargarUsuarios();
