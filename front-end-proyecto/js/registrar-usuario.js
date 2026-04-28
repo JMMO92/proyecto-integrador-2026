@@ -14,6 +14,20 @@ formRegistrarUsuario.addEventListener('submit', async function (event) {
         return;
     }
 
+    if (!validarCorreo(correo)) {
+        mostrarMensaje('El correo no tiene un formato válido.', 'danger');
+        return;
+    }
+
+    const inputCedula = document.getElementById('txtCedula');
+    inputCedula.classList.remove('is-invalid');
+
+    if (!validarCedula(cedula)) {
+        inputCedula.classList.add('is-invalid');
+        mostrarMensaje('La cédula debe contener solo números sin guiones.', 'danger');
+        return;
+    }
+
     const usuario = {
         nombre,
         cedula,
@@ -52,4 +66,14 @@ function mostrarMensaje(texto, tipo) {
             ${texto}
         </div>
     `;
+}
+
+function validarCorreo(correo) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(correo);
+}
+
+function validarCedula(cedula) {
+    const regex = /^[0-9]+$/;
+    return regex.test(cedula);
 }
