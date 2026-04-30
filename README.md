@@ -2,6 +2,9 @@
 
 Plataforma web fullstack para el descubrimiento y gestión de eventos locales (culturales, recreativos y sociales). Desarrollada como proyecto final del curso **Proyecto Integrador** del Técnico en Desarrollo de Software de **CENFOTEC**.
 
+## 🔗 Demo en vivo
+> Despliegue en progreso. Disponible próximamente.
+
 ## Integrantes
 
 - Rubén Cruz Gutiérrez
@@ -52,7 +55,7 @@ localevents/
 
 1. Clonar el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/localevents.git
+git clone https://github.com/JMMO92/localevents.git
 cd localevents
 ```
 
@@ -73,7 +76,7 @@ PORT=3000
 node server.js
 ```
 
-5. Abrir cualquier archivo `.html` de la carpeta `front-end-proyecto` con Live Server en VS Code.
+5. Abrir el archivo `front-end-proyecto/index.html` con Live Server en VS Code para acceder a la aplicación completa.
 
 ---
 
